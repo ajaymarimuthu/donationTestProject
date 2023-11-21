@@ -16,7 +16,7 @@ const Donation = () => {
                 <p className="text-[12px] text-[#667085]"> individuals in need.</p>
             </div>
 
-            <div className="bg-[#F9FAFB] max-w-[1216px] mx-auto border-2 border-black px-[104px] py-[32px]  ">
+            <div className="bg-[#F9FAFB] max-w-[1216px] mx-auto border-2 border-[#F9FAFB] px-[104px] py-[32px]  ">
 
 
                 <div className="my-8 sm:flex-col md:flex-col md:justify-center md:align-middle md:items-center ">

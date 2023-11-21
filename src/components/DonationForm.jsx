@@ -1,20 +1,22 @@
 
 import { z } from "zod";
-import { useState } from "react";
+ 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
-import Success from "./Success";
  
-// import CashDepositForm from "./CashDepositForm";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/userDetails";
+  
+
+import { useDispatch } from "react-redux"
+
 
 // step1: npm i zod react-hook-form @hookform/resolvers
 
 const DonationForm = () => {
-
-    const [formData, setformData] = useState({})
-
-    console.log("formData",formData);
-
+    const navigate=useNavigate();
+    const dispatch = useDispatch();
+ 
     const schema = z.object({
 
         fullName: z.string().min(3).max(25),
@@ -31,9 +33,9 @@ const DonationForm = () => {
         remarks: z.string().min(3).max(75),
         donation: z.number(),
 
-    }).refine((data) =>setformData(data), {
+    }).refine((data) =>dispatch(addUser({data}))  , {
         message: "Passwords do not match",
-        path: ["confirmPassword"],
+        path: ["donation"],
       
     });
 
@@ -41,11 +43,11 @@ const DonationForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) })
 
 
-    const submitData = (data) => {
-        console.log("worked--------", errors);
-        console.log("worked--------", data);
+    const submitData = () => {
+         navigate("/success")
+ 
     }
-
+ 
 
     return (
         <div className="">
@@ -81,6 +83,7 @@ const DonationForm = () => {
 
                         <div className="w-full  ">
                             <input {...register("tax")} className="w-full  py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" type="text" placeholder="Tax Tecipient ID" />
+                            {errors.tax && <span className="text-red-500">{errors.tax.message}</span>}
                         </div>
                     </div>
 
@@ -96,9 +99,11 @@ const DonationForm = () => {
                 <div className="flex gap-3 mb-4 ">
                     <div className="w-[492px] ">
                         <input {...register("postalCode")} name="postalCode" placeholder="Postal Code" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
+                        {errors.postalCode && <span className="text-red-500">{errors.postalCode.message}</span>}
                     </div>
                     <div className="w-[492px]  ">
                         <input {...register("address")} name="address" placeholder="Address" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
+                        {errors.address && <span className="text-red-500">{errors.address.message}</span>}
                     </div>
                 </div>
 
@@ -107,9 +112,11 @@ const DonationForm = () => {
                 <div className="flex gap-3 mb-4">
                     <div className="w-[492px] ">
                         <input  {...register("unitNumber", { valueAsNumber: true })} name="unitNumber" placeholder="Unit Numbere" type="number" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
+                        {errors.unitNumber && <span className="text-red-500">{errors.unitNumber.message}</span>}
                     </div>
                     <div className="w-[492px]  ">
                         <input {...register("remarks")} name="remarks" placeholder="Remarks" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
+                        {errors.remarks && <span className="text-red-500">{errors.remarks.message}</span>}
                     </div>
                 </div>  
 
@@ -146,7 +153,7 @@ const DonationForm = () => {
             </form>  
 
 
-            <Success formdata={formData}/>
+        
 
        
 

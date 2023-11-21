@@ -1,13 +1,14 @@
 
 
-import PropTypes from "prop-types"
+// import PropTypes from "prop-types"
 import ThanksCard from "./ThanksCard";
 
 import Navbar from "./Navbar";
+import DonationInfo from "./DonationInfo";
 
-const Success = ({ formData }) => {
+const Success = () => {
 
-    console.log(formData);
+ 
     return (
         <div >
 
@@ -15,20 +16,18 @@ const Success = ({ formData }) => {
                 <Navbar />
             </div>
 
-
-
             <ThanksCard />
 
-  
+            <DonationInfo/>
+
+
+
+
+
         </div>
     )
 }
 
 
-Success.propTypes = {
-
-    formData: PropTypes.object
-
-}
 
 export default Success

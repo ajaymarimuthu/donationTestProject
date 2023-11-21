@@ -2,20 +2,24 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import {createBrowserRouter,RouterProvider} from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Success from './components/Success.jsx'
+import ErrorPage from "./components/ErrorPage.jsx"
+import { Provider } from 'react-redux';
+import store from './utils/donationStore.jsx'
 
 
-const appRouter= createBrowserRouter([
+const appRouter = createBrowserRouter([
   {
-    path:"/",
-    element:<App/>
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />
   },
   {
-    path:"/success",
-    element:<Success />
+    path: "/success",
+    element: <Success />
   },
-  
+
 
 ])
 
@@ -23,7 +27,11 @@ const appRouter= createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={appRouter}/>
-    
+    <Provider store={store}>
+      <RouterProvider router={appRouter} />
+    </Provider>
+
+
+
   </React.StrictMode>,
 )
