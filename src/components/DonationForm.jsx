@@ -1,13 +1,19 @@
 
 import { z } from "zod";
-
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
+import Success from "./Success";
+ 
 // import CashDepositForm from "./CashDepositForm";
 
 // step1: npm i zod react-hook-form @hookform/resolvers
 
 const DonationForm = () => {
+
+    const [formData, setformData] = useState({})
+
+    console.log("formData",formData);
 
     const schema = z.object({
 
@@ -25,30 +31,13 @@ const DonationForm = () => {
         remarks: z.string().min(3).max(75),
         donation: z.number(),
 
-    }).refine((data) => console.log(data), {
+    }).refine((data) =>setformData(data), {
         message: "Passwords do not match",
         path: ["confirmPassword"],
       
     });
 
-    // const schema=z.object({
-
-    //     // fullName: z.string().min(3).max(15),
-    //     // email: z.string().email(),
-
-    //     //   idType: z.string().min(3).max(15),
-    //     // tax: z.string().min(3).max(15),
-    //     recipientName: z.string().min(3).max(15),
-    //     postalCode:z.number(),
-    //     password: z.string().min(5).max(30),
-    //     address: z.string(),
-    //     confirmPassword: z.string().min(5).max(30),
-    //   })
-    //   .refine((data) =>console.log(data), {
-    //     message: "Passwords do not match",
-    //     path: ["confirmPassword"],
-    //   });
-
+ 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) })
 
 
@@ -60,50 +49,7 @@ const DonationForm = () => {
 
     return (
         <div className="">
-
-
-            {/* <form onSubmit={handleSubmit(submitData)}> */}
-
-            {/* <div className="flex gap-3 mb-4">
-                    <div className="w-[492px] ">
-                        <input name="username" {...register("fullName")} placeholder="Full Name" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
-                        {errors.fullName && <span className="text-red-500">{errors.fullName.message}</span>}
-                    </div>
-                    <div className="w-[492px]  ">
-                        <input name="email" {...register("email")} placeholder="Email Address" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
-                        {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-                    </div>
-                </div> */}
-
-
-                
-{/* <div className="flex gap-3 mb-4 ">
-                    <div className="w-[492px] ">
-                        <input {...register("postalCode", { valueAsNumber: true} )} name="postalCode" placeholder="Postal Code" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
-                        {errors.postalCode && <span className="text-red-500">{errors.postalCode.message}</span>}
-                    </div>
-                    <div className="w-[492px]  ">
-                        <input {...register("address")} name="address" placeholder="Address" type="text" className="w-full py-2 px-4  border-2 bg-white border-[#D0D5DD] rounded-lg" />
-                        {errors.address && <span className="text-red-500">{errors.address.message}</span>}
-                    </div>
-                </div> */}
  
-{/*         
-        <input type="password" {...register("password")} />
-        {errors.password && <span> {errors.password.message}</span>}
-        <label> Confirm Password: </label>
-        <input type="password" {...register("confirmPassword")} />
-        {errors.confirmPassword && (
-          <span> {errors.confirmPassword.message}</span>
-        )}
-
-        <input type="submit" /> */}
-
-            {/* </form> */}
-
-            {/* ------------------------------------------------------ */}
-
-
              <form onSubmit={handleSubmit(submitData)}>
                 <div className="flex gap-3 mb-4">
                     <div className="w-[492px] ">
@@ -198,6 +144,11 @@ const DonationForm = () => {
                 </div>
 
             </form>  
+
+
+            <Success formdata={formData}/>
+
+       
 
 
 
